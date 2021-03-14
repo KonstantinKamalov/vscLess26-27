@@ -19,7 +19,8 @@ body {
 	font-family: $default-font;
 	overflow-x: hidden;
 	color: $text;
-	input, textarea {
+	input,
+	textarea {
 		border: #666 1px solid;
 		outline: none;
 		&:focus:required:invalid {
@@ -44,10 +45,40 @@ body {
 	text-align: center;
 }
 
-b, strong {
+b,
+strong {
 	font-weight: bold;
 }
 
+body {
+	background-color: #727aab;
+}
 
+/*Настройка слик слайдера*/
+.single-item {
+	position: relative;
+	z-index: 2;
+}
+
+.slider-arrow {
+	position: absolute;
+	bottom: -42px;
+	z-index: 99;
+	height: 20px;
+	width: 29px;
+	cursor: pointer;
+	&__right {
+		background: url(../img/@1x/arrow-right__unactive.png) center no-repeat;
+		right: 50%;
+		margin-right: -150px;
+	}
+
+	&__left {
+		background: url(../img/@1x/arrow-left__unactive.png) center no-repeat;
+		left: 50%;
+		margin-left: -150px;
+	}
+}
+/*конец настройки слик слайдера*/
 
 @import "media"; // Always at the end

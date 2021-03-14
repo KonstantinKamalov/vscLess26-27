@@ -1,7 +1,8 @@
-var syntax = 'sass', // Syntax: sass or scss;
+var syntax = 'scss', // Syntax: sass or scss;
 	gulpVersion = '4'; // Gulp version: 3 or 4
 gmWatch = false; // ON/OFF GraphicsMagick watching "img/_src" folder (true/false). Linux install gm: sudo apt update; sudo apt install graphicsmagick
 
+const browserSync = require('browser-sync');
 var gulp = require('gulp')
 sass = require('gulp-sass'),
 	browserSync = require('browser-sync'),
@@ -44,11 +45,20 @@ gulp.task('styles', function () {
 gulp.task('scripts', function () {
 	return gulp.src([
 		'app/libs/jquery/dist/jquery.min.js',
-		'app/js/common.js', // Always at the end
+		'app/slick/slick/slick.min.js',
+		'app/js/common.js' // Always at the end
 	])
 		.pipe(concat('scripts.min.js'))
 		// .pipe(uglify()) // Mifify js (opt.)
-		.pipe(gulp.dest('build/js'))
+		.pipe(gulp.dest('app/js'))
+		.pipe(browserSync.reload({ stream: true }))
+});
+
+//JS builder
+
+gulp.task('jsscripts', function () {
+	return gulp.src('app/js/scripts.min.js')
+		.pipe(gulp.dest('build/js/'))
 		.pipe(browserSync.reload({ stream: true }))
 });
 
@@ -77,7 +87,7 @@ gulp.task('fonts', function () {
 });
 
 //build
-gulp.task('build', gulp.parallel('html', 'css', 'img', 'fonts', 'scripts'));
+gulp.task('build', gulp.parallel('html', 'css', 'img', 'fonts', 'jsscripts'));
 
 // Images @x1 & @x2 + Compression | Required graphicsmagick (sudo apt update; sudo apt install graphicsmagick)
 gulp.task('img1x', function () {
